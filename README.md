@@ -17,5 +17,4 @@ The system is accessible by three types of clients:
 
 ## Frontend 
 
-The frontend code could be found here: https://github.com/yonipace/coupon-system-ui
-
+The frontend code could be found here: https://github.com/yonipace/coupon-system-website
