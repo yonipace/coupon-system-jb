@@ -14,22 +14,22 @@ import app.core.repositories.CouponRepository;
 @Component
 public class CouponExpirationDailyJob {
 
-	@Autowired
-	private CouponRepository couponRepository;
+    @Autowired
+    private CouponRepository couponRepository;
 
-	@Transactional
-	@Scheduled(timeUnit = TimeUnit.HOURS, fixedRate = 24)
-	public void deleteExpired() {
+    @Transactional
+    @Scheduled(timeUnit = TimeUnit.HOURS, fixedRate = 24)
+    public void deleteExpired() {
 
-		try {
+        try {
 
-			System.out.println("--- daily job started ---");
-			System.out.println("--- deleting coupons expired by " + LocalDate.now() + " ---");
+            System.out.println("--- daily job started ---");
+            System.out.println("--- deleting coupons expired by " + LocalDate.now() + " ---");
 
-			couponRepository.deleteByEndDateBefore(LocalDate.now());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
+            couponRepository.deleteByEndDateBefore(LocalDate.now());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
 }

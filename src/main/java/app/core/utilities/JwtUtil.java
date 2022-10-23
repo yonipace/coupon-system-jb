@@ -24,85 +24,85 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtUtil {
 
-	private String alg = SignatureAlgorithm.HS256.getJcaName();
-	@Value("${jwt.util.secret.key}")
-	private String secret;
-	private Key key;
+    private String alg = SignatureAlgorithm.HS256.getJcaName();
+    @Value("${jwt.util.secret.key}")
+    private String secret;
+    private Key key;
 
-	@Value("${jwt.util.chrono.unit.number}")
-	private int unitsNumber;
-	@Value("${jwt.util.chrono.unit}")
-	private String chronoUnit;
+    @Value("${jwt.util.chrono.unit.number}")
+    private int unitsNumber;
+    @Value("${jwt.util.chrono.unit}")
+    private String chronoUnit;
 
-	@PostConstruct
-	public void initKey() {
-		byte[] secretDecoded = Base64.getDecoder().decode(secret.getBytes());
-		this.key = new SecretKeySpec(secretDecoded, alg);
-	}
+    @PostConstruct
+    public void initKey() {
+        byte[] secretDecoded = Base64.getDecoder().decode(secret.getBytes());
+        this.key = new SecretKeySpec(secretDecoded, alg);
+    }
 
-	public String generateToken(int id, String email, String name, Role role) {
+    public String generateToken(int id, String email, String name, Role role) {
 
-		Map<String, Object> claims = new HashMap<>();
-		claims.put("clientId", id);
-		claims.put("name", name);
-		claims.put("role", role);
-		return createToken(claims, email);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("clientId", id);
+        claims.put("name", name);
+        claims.put("role", role);
+        return createToken(claims, email);
 
-	}
+    }
 
-	private String createToken(Map<String, Object> claims, String subject) {
+    private String createToken(Map<String, Object> claims, String subject) {
 
-		Instant now = Instant.now();
-		Instant expire = now.plus(this.unitsNumber, ChronoUnit.valueOf(chronoUnit));
+        Instant now = Instant.now();
+        Instant expire = now.plus(this.unitsNumber, ChronoUnit.valueOf(chronoUnit));
 
-		String token = Jwts.builder()
+        String token = Jwts.builder()
 
-				.setClaims(claims)
+                .setClaims(claims)
 
-				.setSubject(subject)
+                .setSubject(subject)
 
-				.setIssuedAt(Date.from(now))
+                .setIssuedAt(Date.from(now))
 
-				.setExpiration(Date.from(expire))
+                .setExpiration(Date.from(expire))
 
-				.signWith(key)
+                .signWith(key)
 
-				.compact();
+                .compact();
 
-		return token;
-	}
+        return token;
+    }
 
-	public String extractEmail(String token) {
+    public String extractEmail(String token) {
 
-		Claims claims = extractAllClaims(token);
-		return claims.getSubject();
-	}
+        Claims claims = extractAllClaims(token);
+        return claims.getSubject();
+    }
 
-	public int extractId(String token) {
+    public int extractId(String token) {
 
-		Claims claims = extractAllClaims(token);
-		return (int) claims.get("clientId");
-	}
+        Claims claims = extractAllClaims(token);
+        return (int) claims.get("clientId");
+    }
 
-	public Role extractRole(String token) {
+    public Role extractRole(String token) {
 
-		Claims claims = extractAllClaims(token);
-		return Role.valueOf((String) claims.get("role"));
-	}
+        Claims claims = extractAllClaims(token);
+        return Role.valueOf((String) claims.get("role"));
+    }
 
-	private Claims extractAllClaims(String token) {
-		JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(key).build();
-		Jws<Claims> jws = jwtParser.parseClaimsJws(token);
-		return jws.getBody();
-	}
+    private Claims extractAllClaims(String token) {
+        JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(key).build();
+        Jws<Claims> jws = jwtParser.parseClaimsJws(token);
+        return jws.getBody();
+    }
 
-	// more method for more info
-	public Date getTokenExp(String token) {
-		return extractAllClaims(token).getExpiration();
-	}
+    // more method for more info
+    public Date getTokenExp(String token) {
+        return extractAllClaims(token).getExpiration();
+    }
 
-	public Date getTokenIssuedAt(String token) {
-		return extractAllClaims(token).getIssuedAt();
-	}
+    public Date getTokenIssuedAt(String token) {
+        return extractAllClaims(token).getIssuedAt();
+    }
 
 }

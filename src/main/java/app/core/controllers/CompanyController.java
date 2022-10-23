@@ -29,108 +29,108 @@ import app.core.utilities.JwtUtil;
 @RequestMapping("/company")
 public class CompanyController {
 
-	@Autowired
-	private CompanyService companyService;
-	@Autowired
-	private JwtUtil jwtUtil;
+    @Autowired
+    private CompanyService companyService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
-	@PostMapping("/coupons")
-	public Coupon addCoupon(@RequestBody Coupon coupon, @RequestHeader String token) {
+    @PostMapping("/coupons")
+    public Coupon addCoupon(@RequestBody Coupon coupon, @RequestHeader String token) {
 
-		try {
-			int id = jwtUtil.extractId(token);
+        try {
+            int id = jwtUtil.extractId(token);
 
-			return this.companyService.addCoupon(coupon, id);
-		} catch (CouponSystemException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-		}
-	}
+            return this.companyService.addCoupon(coupon, id);
+        } catch (CouponSystemException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
 
-	@PutMapping("/coupons")
-	public Coupon updateCoupon(@RequestBody Coupon coupon, @RequestHeader String token) {
+    @PutMapping("/coupons")
+    public Coupon updateCoupon(@RequestBody Coupon coupon, @RequestHeader String token) {
 
-		try {
-			int id = jwtUtil.extractId(token);
+        try {
+            int id = jwtUtil.extractId(token);
 
-			return this.companyService.updateCoupon(coupon, id);
-		} catch (CouponSystemException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-		}
+            return this.companyService.updateCoupon(coupon, id);
+        } catch (CouponSystemException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
 
-	}
+    }
 
-	@DeleteMapping("/coupons")
-	public void deleteCoupon(@RequestParam int couponId, @RequestHeader String token) {
+    @DeleteMapping("/coupons")
+    public void deleteCoupon(@RequestParam int couponId, @RequestHeader String token) {
 
-		try {
-			int id = jwtUtil.extractId(token);
+        try {
+            int id = jwtUtil.extractId(token);
 
-			this.companyService.deleteCoupon(couponId, id);
-		} catch (CouponSystemException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-		}
+            this.companyService.deleteCoupon(couponId, id);
+        } catch (CouponSystemException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
 
-	}
+    }
 
-	@GetMapping("/coupons/{id}")
-	public Coupon getOneCoupon(@PathVariable int couponId, @RequestHeader String token) {
+    @GetMapping("/coupons/{id}")
+    public Coupon getOneCoupon(@PathVariable int couponId, @RequestHeader String token) {
 
-		try {
-			int id = jwtUtil.extractId(token);
+        try {
+            int id = jwtUtil.extractId(token);
 
-			return this.companyService.getOneCoupon(couponId, id);
-		} catch (CouponSystemException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-		}
-	}
+            return this.companyService.getOneCoupon(couponId, id);
+        } catch (CouponSystemException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
 
-	@GetMapping("/coupons")
-	public List<Coupon> getAllCompanyCoupons(@RequestHeader String token) {
+    @GetMapping("/coupons")
+    public List<Coupon> getAllCompanyCoupons(@RequestHeader String token) {
 
-		try {
-			int id = jwtUtil.extractId(token);
+        try {
+            int id = jwtUtil.extractId(token);
 
-			return this.companyService.getCompanyCoupons(id);
-		} catch (CouponSystemException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-		}
-	}
+            return this.companyService.getCompanyCoupons(id);
+        } catch (CouponSystemException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
 
-	@GetMapping("/coupons/category")
-	public List<Coupon> getAllCompanyCouponsByCategory(@RequestParam Category category, @RequestHeader String token) {
+    @GetMapping("/coupons/category")
+    public List<Coupon> getAllCompanyCouponsByCategory(@RequestParam Category category, @RequestHeader String token) {
 
-		try {
-			int id = jwtUtil.extractId(token);
+        try {
+            int id = jwtUtil.extractId(token);
 
-			return this.companyService.getCompanyCoupons(category, id);
-		} catch (CouponSystemException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-		}
-	}
+            return this.companyService.getCompanyCoupons(category, id);
+        } catch (CouponSystemException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
 
-	@GetMapping("/coupons/price")
-	public List<Coupon> getAllCompanyCouponsUpToPrice(@RequestParam double price, @RequestHeader String token) {
+    @GetMapping("/coupons/price")
+    public List<Coupon> getAllCompanyCouponsUpToPrice(@RequestParam double price, @RequestHeader String token) {
 
-		try {
-			int id = jwtUtil.extractId(token);
+        try {
+            int id = jwtUtil.extractId(token);
 
-			return this.companyService.getCompanyCoupons(price, id);
-		} catch (CouponSystemException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-		}
+            return this.companyService.getCompanyCoupons(price, id);
+        } catch (CouponSystemException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
 
-	}
+    }
 
-	@GetMapping("/details")
-	public Company getDetails(@RequestHeader String token) {
+    @GetMapping("/details")
+    public Company getDetails(@RequestHeader String token) {
 
-		try {
-			int id = jwtUtil.extractId(token);
+        try {
+            int id = jwtUtil.extractId(token);
 
-			return companyService.getCompanyDetails(id);
-		} catch (CouponSystemException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-		}
-	}
+            return companyService.getCompanyDetails(id);
+        } catch (CouponSystemException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
 
 }
